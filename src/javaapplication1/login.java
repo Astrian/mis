@@ -54,6 +54,8 @@ public class login extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("微软雅黑", 0, 12)); // NOI18N
         jLabel2.setText("使用管理员账户登录图书借阅系统");
 
+        Username.setText("Astrian");
+
         jLabel3.setFont(new java.awt.Font("微软雅黑", 0, 12)); // NOI18N
         jLabel3.setText("用户名");
 
@@ -72,6 +74,8 @@ public class login extends javax.swing.JFrame {
             }
         });
 
+        Pwd.setText("abc123");
+        Pwd.setToolTipText("");
         Pwd.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         Pwd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -48,6 +48,10 @@ public class NewJFrame extends javax.swing.JFrame {
             addBook addBookWin = new addBook();
             addBookWin.show(true);
         }
+        if (nextStep == "bookManage"){
+            bookContent bookContentWindow = new bookContent();
+            bookContentWindow.show(true);
+        }
     }
     
     public NewJFrame() {
@@ -69,6 +73,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         addBook = new javax.swing.JButton();
+        bookManage = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         Loginout = new javax.swing.JButton();
@@ -96,6 +101,13 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        bookManage.setText("书籍管理");
+        bookManage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bookManageActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -103,7 +115,10 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addBook)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(addBook)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bookManage))
                     .addComponent(jLabel5)
                     .addComponent(jLabel2))
                 .addContainerGap(441, Short.MAX_VALUE))
@@ -116,8 +131,10 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(addBook)
-                .addContainerGap(278, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addBook)
+                    .addComponent(bookManage))
+                .addContainerGap(277, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("书目", jPanel2);
@@ -265,6 +282,11 @@ public class NewJFrame extends javax.swing.JFrame {
         operateAuth(0, "addBook");
     }//GEN-LAST:event_addBookActionPerformed
 
+    private void bookManageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookManageActionPerformed
+        // TODO add your handling code here:
+        operateAuth(0, "bookManage");
+    }//GEN-LAST:event_bookManageActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -303,6 +325,7 @@ public class NewJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton Loginout;
     private javax.swing.JButton addBook;
+    private javax.swing.JButton bookManage;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
