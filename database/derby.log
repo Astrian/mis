@@ -1,23 +1,65 @@
-Apache Derby Network Server £­ 10.2.2.0 - (485682) ÒÑÆô¶¯²¢ÇÒÒÑ×¼±¸ºÃ 2016-02-06 02:00:03.846 GMT Ê±ÔÚ¶Ë¿Ú 1527 ÉÏ½ÓÊÜÁ¬½Ó
+Mon Mar 21 15:31:36 CST 2016 : Apache Derby ç½‘ç»œæœåŠ¡å™¨ - 10.10.2.0 - (1582446) å·²å¯åŠ¨å¹¶å‡†å¤‡æ¥å—ç«¯å£ 1527 ä¸Šçš„è¿æ¥
 ----------------------------------------------------------------
-2016-02-06 02:00:04.304 GMT£º
-ÕıÔÚÒıµ¼Êı¾İ¿âÄ¿Â¼ C:\Users\Administrator\.netbeans-derby\sample  ÖĞµÄ
-Derby VThe Apache Software Foundation - Apache Derby - 10.2.2.0 - (485682) ÊµÀı c013800d-0152-b44e-b7b6-000040ac0767
-
-
-2016-02-06 02:00:04.317 GMT£º
-ÕıÔÚ¹Ø±ÕÊµÀı c013800d-0152-b44e-b7b6-000040ac0767
-----------------------------------------------------------------
-2016-02-06 02:00:04.326 GMT Thread[DRDAConnThread_3,5,main] (DATABASE = sample), (DRDAID = {1}), ÎŞ·¨Æô¶¯Êı¾İ¿â¡°sample¡±£¬Çë²ÎÔÄÏÂÒ»¸öÒì³££¬ÒÔÁË½âÏêÏ¸ĞÅÏ¢¡£
-2016-02-06 02:00:04.327 GMT Thread[DRDAConnThread_3,5,main] (DATABASE = sample), (DRDAID = {1}), C:\Users\Administrator\.netbeans-derby\sample ÉÏµÄÊı¾İ¿â¾ßÓĞÓëµ±Ç°°æ±¾µÄÈí¼ş²»¼æÈİµÄ¸ñÊ½¡£Êı¾İ¿âÓÉ°æ±¾ 10.5 ´´½¨»òÉı¼¶¡£
-----------------------------------------------------------------
-2016-02-06 02:00:15.661 GMT£º
-ÕıÔÚÒıµ¼Êı¾İ¿âÄ¿Â¼ C:\Users\Administrator\.netbeans-derby\mis  ÖĞµÄ
-Derby VThe Apache Software Foundation - Apache Derby - 10.2.2.0 - (485682) ÊµÀı a816c00e-0152-b44e-b7b6-000040ac0767
-
-Êı¾İ¿âÀà×°ÈëÆ÷ÒÑÆô¶¯ £­ derby.database.classpath=¡°¡±
-2016-02-06 02:00:16.775 GMT Thread[DRDAConnThread_3,5,main] (DATABASE = mis), (DRDAID = {2}), Á¬½Ó±»¾Ü¾ø£ºÈÏÖ¤ÎŞĞ§¡£
-
-2016-03-21 04:01:35.583 GMT£º
-ÕıÔÚ¹Ø±ÕÊµÀı a816c00e-0152-b44e-b7b6-000040ac0767
-----------------------------------------------------------------
+Mon Mar 21 15:31:37 CST 2016:
+æ­£åœ¨ä½¿ç”¨ç±»åŠ è½½ç¨‹åº sun.misc.Launcher$AppClassLoader@266474c2 å¼•å¯¼æ•°æ®åº“
+ç›®å½• /Users/Astrian/mis/database/mis ä¸­çš„ Derby ç‰ˆæœ¬ The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446) å®ä¾‹ a816c00e-0153-9816-0e5a-00000bf388d2
+å·²ä» file:/Applications/NetBeans/glassfish-4.1.1/javadb/lib/derby.jar åŠ è½½
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_73-b02
+user.dir=/Applications/NetBeans/glassfish-4.1.1/javadb
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.11.3
+derby.system.home=/Users/Astrian/mis/database
+æ•°æ®åº“ç±»åŠ è½½ç¨‹åºå·²å¯åŠ¨ - derby.database.classpath=''
+Mon Mar 21 15:31:37 CST 2016 Thread[DRDAConnThread_2,5,main] (XID = 765), (SESSIONID = 0), (DATABASE = mis), (DRDAID = {1}), Cleanup action starting
+java.sql.SQLNonTransientConnectionException: å‘ç”Ÿè¿æ¥éªŒè¯å¤±è´¥ã€‚åŸå› ï¼šéªŒè¯æ— æ•ˆã€‚ã€‚
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.checkUserCredentials(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection40.<init>(Unknown Source)
+	at org.apache.derby.jdbc.Driver40.getNewEmbedConnection(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
+	at org.apache.derby.jdbc.Driver20.connect(Unknown Source)
+	at org.apache.derby.jdbc.EmbeddedDriver.connect(Unknown Source)
+	at org.apache.derby.impl.drda.Database.makeConnection(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.run(Unknown Source)
+Caused by: java.sql.SQLException: å‘ç”Ÿè¿æ¥éªŒè¯å¤±è´¥ã€‚åŸå› ï¼šéªŒè¯æ— æ•ˆã€‚ã€‚
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
+	... 19 more
+============= begin nested exception, level (1) ===========
+java.sql.SQLException: å‘ç”Ÿè¿æ¥éªŒè¯å¤±è´¥ã€‚åŸå› ï¼šéªŒè¯æ— æ•ˆã€‚ã€‚
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.checkUserCredentials(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection40.<init>(Unknown Source)
+	at org.apache.derby.jdbc.Driver40.getNewEmbedConnection(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
+	at org.apache.derby.jdbc.Driver20.connect(Unknown Source)
+	at org.apache.derby.jdbc.EmbeddedDriver.connect(Unknown Source)
+	at org.apache.derby.impl.drda.Database.makeConnection(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.run(Unknown Source)
+============= end nested exception, level (1) ===========
+Cleanup action completed
+Mon Mar 21 15:31:37 CST 2016 Thread[DRDAConnThread_2,5,main] (DATABASE = mis), (DRDAID = {1}), å‘ç”Ÿè¿æ¥éªŒè¯å¤±è´¥ã€‚åŸå› ï¼šéªŒè¯æ— æ•ˆã€‚ã€‚
