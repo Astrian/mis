@@ -486,6 +486,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 13)); // NOI18N
         jLabel12.setText("对图书借阅者进行管理。");
 
+        userManage.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 13)); // NOI18N
         userManage.setText("用户管理");
         userManage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -619,7 +620,7 @@ public class NewJFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
+            .addComponent(jTabbedPane3)
         );
 
         pack();
