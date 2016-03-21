@@ -12,13 +12,16 @@ import javax.swing.JOptionPane;
  * @author Administrator
  */
 public class addBook extends javax.swing.JFrame {
-
+    
+    public bookContent aa;
     /**
      * Creates new form addBook
+     * @param xx
      */
-    public addBook() {
+    public addBook(bookContent xx) {
         initComponents();
         
+        this.aa = xx;
     }
     private void addBook(){
         if(this.bname.getText().length()==0 || this.btotal.getText().length()==0 || this.isbn.getText().length() == 0){
@@ -36,6 +39,7 @@ public class addBook extends javax.swing.JFrame {
                 //con.runSql("INSERT INTO BOOK (BNM, BNAME,ISBN,BTOTAL,BLEFT) VALUES ( '"+this.bnm.getText()+"', '"+this.bname.getText()+"', '"+this.isbn.getText()+"', '"+this.btotal.getText()+"', '"+this.bleft.getText()+"')");
                 con.runSql("INSERT INTO BOOK ( BNAME,ISBN,BTOTAL,BLEFT) VALUES (  '"+this.bname.getText()+"', "+this.isbn.getText()+", "+this.btotal.getText()+", "+this.btotal.getText()+")");
                 JOptionPane.showMessageDialog(null, "<html>已添加书目</html>", "完成", JOptionPane.INFORMATION_MESSAGE);
+                aa.listBook();
                 this.dispose();
             }else{
               JOptionPane.showMessageDialog(null, "<html><b>书目已存在</b><br>请检查输入是否正确。</html>", "无法添加书目", JOptionPane.INFORMATION_MESSAGE);
@@ -199,7 +203,7 @@ public class addBook extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new addBook().setVisible(true);
+                //new addBook().setVisible(true);
             }
         });
     }
