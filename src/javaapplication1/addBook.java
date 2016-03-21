@@ -78,7 +78,9 @@ public class addBook extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Noto Sans", 1, 13)); // NOI18N
+        isbn.setText("9787");
+
+        jButton1.setFont(new java.awt.Font("Noto Sans CJK SC", 1, 13)); // NOI18N
         jButton1.setText("新增书籍");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,14 +91,16 @@ public class addBook extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 18)); // NOI18N
         jLabel1.setText("新增书籍");
 
+        jLabel2.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 13)); // NOI18N
         jLabel2.setText("书名");
 
-        jLabel3.setFont(new java.awt.Font("Noto Sans", 0, 13)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 13)); // NOI18N
         jLabel3.setText("ISBN 号");
 
-        jLabel4.setFont(new java.awt.Font("Noto Sans", 0, 13)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 13)); // NOI18N
         jLabel4.setText("藏书量");
 
+        jButton2.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 13)); // NOI18N
         jButton2.setText("取消");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,8 +108,8 @@ public class addBook extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Noto Sans", 0, 13)); // NOI18N
-        jLabel5.setText("ISBN-9787-");
+        jLabel5.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 13)); // NOI18N
+        jLabel5.setText("ISBN-");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -129,7 +133,7 @@ public class addBook extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(isbn, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,7 +158,7 @@ public class addBook extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();

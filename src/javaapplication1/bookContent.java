@@ -19,7 +19,7 @@ public class bookContent extends javax.swing.JFrame {
      * Creates new form bookContent
      */
     
-    private void delBook (String which){
+    private void delBook (Object which){
         db con=new db();
         ResultSet test = con.cha("select * from BOOK where isbn="+which);
         if(test==null){
@@ -29,7 +29,9 @@ public class bookContent extends javax.swing.JFrame {
         try{
             if(test.next()){
                 String result = con.runSql("delete from book where isbn = "+which);
+                
                 if(result == "OKAY"){
+                    System.out.println("The result is OK.");
                     listBook();
                 }else{
                     JOptionPane.showMessageDialog(null, "读取数据库失败", "读取数据库失败", JOptionPane.ERROR_MESSAGE);
@@ -43,6 +45,16 @@ public class bookContent extends javax.swing.JFrame {
     }
     
     public void listBook() {
+        int i=0;
+        do{
+            this.bookTable.getModel().setValueAt("", i, 0);
+            this.bookTable.getModel().setValueAt("", i, 1);
+            this.bookTable.getModel().setValueAt("", i, 2);
+            this.bookTable.getModel().setValueAt("", i, 3);
+            i++;
+        }while(i==100);
+        
+        //System.out.println("`listBook` Runned");
         db con=new db();
         ResultSet test=con.cha("select * from book");
         if(test==null){
@@ -51,13 +63,13 @@ public class bookContent extends javax.swing.JFrame {
         }
 
         try{
-            int i=0;
+            int j=0;
             while (test.next()) {
-                this.bookTable.getModel().setValueAt(test.getInt("isbn"), i, 0);
-                this.bookTable.getModel().setValueAt(test.getString("bname"), i, 1);
-                this.bookTable.getModel().setValueAt(test.getInt("btotal"), i, 2);
-                this.bookTable.getModel().setValueAt(test.getInt("bleft"), i, 3);
-                i++;
+                this.bookTable.getModel().setValueAt(test.getLong("isbn"), j, 0);
+                this.bookTable.getModel().setValueAt(test.getString("bname"), j, 1);
+                this.bookTable.getModel().setValueAt(test.getInt("btotal"), j, 2);
+                this.bookTable.getModel().setValueAt(test.getInt("bleft"), j, 3);
+                j++;
             }
         }catch(Exception e) {
             e.printStackTrace();
@@ -91,13 +103,14 @@ public class bookContent extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
         jLabel1.setText("书籍管理");
 
-        jButton1.setText("新增书籍");
+        jButton1.setText("+");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
+        bookTable.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 12)); // NOI18N
         bookTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -202,7 +215,7 @@ public class bookContent extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "#", "书名", "存量", "余量"
+                "ISBN", "书名", "存量", "余量"
             }
         ) {
             Class[] types = new Class [] {
@@ -221,19 +234,25 @@ public class bookContent extends javax.swing.JFrame {
             }
         });
         bookTable.getTableHeader().setReorderingAllowed(false);
+        bookTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bookTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(bookTable);
         if (bookTable.getColumnModel().getColumnCount() > 0) {
             bookTable.getColumnModel().getColumn(0).setResizable(false);
-            bookTable.getColumnModel().getColumn(0).setPreferredWidth(20);
+            bookTable.getColumnModel().getColumn(0).setPreferredWidth(10);
             bookTable.getColumnModel().getColumn(1).setResizable(false);
-            bookTable.getColumnModel().getColumn(1).setPreferredWidth(70);
+            bookTable.getColumnModel().getColumn(1).setPreferredWidth(150);
             bookTable.getColumnModel().getColumn(2).setResizable(false);
-            bookTable.getColumnModel().getColumn(2).setPreferredWidth(5);
+            bookTable.getColumnModel().getColumn(2).setPreferredWidth(1);
             bookTable.getColumnModel().getColumn(3).setResizable(false);
-            bookTable.getColumnModel().getColumn(3).setPreferredWidth(5);
+            bookTable.getColumnModel().getColumn(3).setPreferredWidth(1);
         }
 
-        jButton2.setText("删除所选行");
+        jButton2.setText("-");
+        jButton2.setEnabled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -247,12 +266,13 @@ public class bookContent extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2))
                     .addComponent(jLabel1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 658, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 658, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -281,10 +301,17 @@ public class bookContent extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         int which = this.bookTable.getSelectedRow();
-        String delIsbn = (String)this.bookTable.getValueAt(which, 0);
-        System.out.println(delIsbn);
+        Object delIsbn = this.bookTable.getValueAt(which, 0);
+        //System.out.println(which);
         delBook(delIsbn);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void bookTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookTableMouseClicked
+        // TODO add your handling code here:
+        if(this.bookTable.getValueAt(this.bookTable.getSelectedRow(), 0).toString().length()!=0){
+            this.jButton2.setEnabled(true);
+        }
+    }//GEN-LAST:event_bookTableMouseClicked
 
     /**
      * @param args the command line arguments

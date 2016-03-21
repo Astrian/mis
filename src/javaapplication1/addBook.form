@@ -45,7 +45,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="27" max="32767" attributes="0"/>
+              <EmptySpace pref="22" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -74,7 +74,7 @@
                   <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="28" max="32767" attributes="0"/>
+              <EmptySpace pref="17" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -86,13 +86,16 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="isbn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="9787"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="btotal">
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Noto Sans" size="13" style="1"/>
+          <Font name="Noto Sans CJK SC" size="13" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="&#x65b0;&#x589e;&#x4e66;&#x7c4d;"/>
       </Properties>
@@ -110,13 +113,16 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Noto Sans CJK SC" size="13" style="0"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="&#x4e66;&#x540d;"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Noto Sans" size="13" style="0"/>
+          <Font name="Noto Sans CJK SC" size="13" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="ISBN &#x53f7;"/>
       </Properties>
@@ -124,13 +130,16 @@
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Noto Sans" size="13" style="0"/>
+          <Font name="Noto Sans CJK SC" size="13" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="&#x85cf;&#x4e66;&#x91cf;"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Noto Sans CJK SC" size="13" style="0"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="&#x53d6;&#x6d88;"/>
       </Properties>
       <Events>
@@ -140,9 +149,9 @@
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Noto Sans" size="13" style="0"/>
+          <Font name="Noto Sans CJK SC" size="13" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="ISBN-9787-"/>
+        <Property name="text" type="java.lang.String" value="ISBN-"/>
       </Properties>
     </Component>
   </SubComponents>
