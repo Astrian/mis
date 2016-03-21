@@ -19,10 +19,13 @@ public class login extends javax.swing.JFrame {
     
     public NewJFrame aa;
     
-    public login(NewJFrame xx) {
+    String nextStep;
+    
+    public login(NewJFrame xx, String nextStep) {
         initComponents();
         
         this.aa=xx;
+        this.nextStep = nextStep;
     }
 
     /**
@@ -164,7 +167,7 @@ public class login extends javax.swing.JFrame {
                 this.aa.login_info.setText("欢迎您，"+this.Username.getText());
                 this.aa.Loginout.setText("退出登录");
                 this.aa.loginUser = this.Username.getText();
-                this.aa.ContinueAction();
+                this.aa.ContinueAction(nextStep);
                 this.dispose();
             }
             else

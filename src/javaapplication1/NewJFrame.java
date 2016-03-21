@@ -12,13 +12,26 @@ package javaapplication1;
 public class NewJFrame extends javax.swing.JFrame {
     
     String loginUser = null;
-    String nextStep = null;
+    //String nextStep = null;
     
     /**
      * Creates new form NewJFrame
      */
     
-    public void ContinueAction(){
+    private void operateAuth(int sensitive, String nextStep){
+        if( loginUser==null ){
+            login loginForAddAdmin = new login(this,nextStep);
+            loginForAddAdmin.show(true);
+            return;
+        }else if(sensitive == 1){
+            CheckPwd checkPwdWin = new CheckPwd(this.loginUser, this, nextStep);
+            checkPwdWin.show(true);
+            return;
+        }
+        ContinueAction(nextStep);
+    }
+    
+    public void ContinueAction(String nextStep){
         if (nextStep == "addAdmin"){
             addAdmin addAdminWin = new addAdmin();
             addAdminWin.show(true);
@@ -31,7 +44,6 @@ public class NewJFrame extends javax.swing.JFrame {
             delAdmin delAdminWindow = new delAdmin();
             delAdminWindow.show(true);
         }
-        nextStep = null;
     }
     
     public NewJFrame() {
@@ -96,10 +108,10 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("微软雅黑", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 18)); // NOI18N
         jLabel1.setText("管理员登录");
 
-        login_info.setFont(new java.awt.Font("微软雅黑", 0, 12)); // NOI18N
+        login_info.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 12)); // NOI18N
         login_info.setText("登录到书目管理系统");
 
         jLabel3.setFont(new java.awt.Font("微软雅黑", 0, 18)); // NOI18N
@@ -134,7 +146,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton2)
@@ -147,12 +159,12 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addComponent(Loginout)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
-                .addContainerGap(359, Short.MAX_VALUE))
+                .addContainerGap(349, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(24, 24, 24)
                 .addComponent(jLabel1)
                 .addGap(2, 2, 2)
                 .addComponent(login_info)
@@ -167,7 +179,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addComponent(jButton2)
                     .addComponent(jButton3)
                     .addComponent(jButton4))
-                .addContainerGap(207, Short.MAX_VALUE))
+                .addContainerGap(181, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("管理员", jPanel1);
@@ -189,7 +201,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private void LoginoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginoutActionPerformed
         // TODO add your handling code here:
         if(loginUser == null){
-            login Login = new login(this);
+            login Login = new login(this,"nothing");
             Login.show(true);
         }else{
             logout Logout = new logout(this);
@@ -199,38 +211,19 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        nextStep = "addAdmin";
-        if(loginUser == null){
-            login loginForAddAdmin = new login(this);
-            loginForAddAdmin.show(true);
-        }else{
-            CheckPwd checkPwdWin = new CheckPwd(this.loginUser, this);
-            checkPwdWin.show(true);
-        }
+        operateAuth(1, "addAdmin");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        nextStep = "changePwd";
-        if(loginUser == null){
-            login loginForAddAdmin = new login(this);
-            loginForAddAdmin.show(true);
-        }else{
-            CheckPwd checkPwdWin = new CheckPwd(this.loginUser, this);
-            checkPwdWin.show(true);
-        }
+        //nextStep = "changePwd";
+        operateAuth(1, "changePwd");
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        nextStep = "delAdmin";
-        if(loginUser == null){
-            login loginForAddAdmin = new login(this);
-            loginForAddAdmin.show(true);
-        }else{
-            CheckPwd checkPwdWin = new CheckPwd(this.loginUser, this);
-            checkPwdWin.show(true);
-        }
+        //nextStep = "delAdmin";
+        operateAuth(1, "delAdmin");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**

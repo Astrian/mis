@@ -35,7 +35,7 @@ public class CheckPwd extends javax.swing.JFrame {
             String pwd=test.getString("pwd");
             
             if(this.Pwd.getText().equals(pwd)){
-                this.aa.ContinueAction();
+                this.aa.ContinueAction(nextStep);
                 this.dispose();
             }
             else
@@ -45,10 +45,12 @@ public class CheckPwd extends javax.swing.JFrame {
         }
     }
     NewJFrame aa;
-    public CheckPwd(String username, NewJFrame xx) {
+    String nextStep;
+    public CheckPwd(String username, NewJFrame xx, String nextStep) {
         initComponents();
         this.username.setText(username);
         this.aa = xx;
+        this.nextStep = nextStep;
     }
 
     /**
