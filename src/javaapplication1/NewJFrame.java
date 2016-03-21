@@ -44,6 +44,10 @@ public class NewJFrame extends javax.swing.JFrame {
             delAdmin delAdminWindow = new delAdmin();
             delAdminWindow.show(true);
         }
+        if (nextStep == "addBook"){
+            addBook addBookWin = new addBook();
+            addBookWin.show(true);
+        }
     }
     
     public NewJFrame() {
@@ -62,6 +66,9 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jTabbedPane3 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        addBook = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         Loginout = new javax.swing.JButton();
@@ -75,15 +82,42 @@ public class NewJFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel2.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 18)); // NOI18N
+        jLabel2.setText("书籍管理");
+
+        jLabel5.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 13)); // NOI18N
+        jLabel5.setText("对书籍进行新增、管理以及删除等操作。");
+
+        addBook.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 13)); // NOI18N
+        addBook.setText("新增书籍");
+        addBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBookActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 656, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(addBook)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel2))
+                .addContainerGap(441, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 391, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(addBook)
+                .addContainerGap(278, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("书目", jPanel2);
@@ -226,6 +260,11 @@ public class NewJFrame extends javax.swing.JFrame {
         operateAuth(1, "delAdmin");
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void addBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBookActionPerformed
+        // TODO add your handling code here:
+        operateAuth(0, "addBook");
+    }//GEN-LAST:event_addBookActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -263,12 +302,15 @@ public class NewJFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton Loginout;
+    private javax.swing.JButton addBook;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

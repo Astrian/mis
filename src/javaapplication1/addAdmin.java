@@ -80,6 +80,12 @@ public class addAdmin extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("微软雅黑", 0, 12)); // NOI18N
         jLabel3.setText("用户名");
 
+        username.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usernameActionPerformed(evt);
+            }
+        });
+
         jLabel4.setFont(new java.awt.Font("微软雅黑", 0, 12)); // NOI18N
         jLabel4.setText("初始密码");
 
@@ -88,7 +94,6 @@ public class addAdmin extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("微软雅黑", 1, 12)); // NOI18N
         jButton1.setText("新增管理员");
-        jButton1.setActionCommand("新增管理员");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -166,6 +171,10 @@ public class addAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
          this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_usernameActionPerformed
 
     /**
      * @param args the command line arguments
