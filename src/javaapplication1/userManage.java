@@ -22,14 +22,40 @@ public class userManage extends javax.swing.JFrame {
         listUser();
     }
 
+    private void delUser (Object which){
+        db con=new db();
+        ResultSet test = con.cha("select * from libuser where id="+which);
+        if(test==null){
+            JOptionPane.showMessageDialog(null, "读取数据库失败", "读取数据库失败", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try{
+            if(test.next()){
+                String result = con.runSql("delete from libuser where id = "+which);
+                
+                if(result == "OKAY"){
+                    System.out.println("The result is OK.");
+                    listUser();
+                }else{
+                    JOptionPane.showMessageDialog(null, "读取数据库失败", "读取数据库失败", JOptionPane.ERROR_MESSAGE);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "数据库数据出现错误", "数据库数据出现错误", JOptionPane.ERROR_MESSAGE);
+            }
+         }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     public void listUser() {
         int i=0;
         do{
-            this.userTable.getModel().setValueAt("", i, 0);
-            this.userTable.getModel().setValueAt("", i, 1);
-            this.userTable.getModel().setValueAt("", i, 2);
-            this.userTable.getModel().setValueAt("", i, 3);
-            this.userTable.getModel().setValueAt("", i, 4);
+            System.out.println("actived...");
+            this.userTable.getModel().setValueAt(" ", i, 0);
+            this.userTable.getModel().setValueAt(" ", i, 1);
+            this.userTable.getModel().setValueAt(" ", i, 2);
+            this.userTable.getModel().setValueAt(" ", i, 3);
+            this.userTable.getModel().setValueAt(" ", i, 4);
             i++;
         }while(i==100);
         
@@ -234,6 +260,11 @@ public class userManage extends javax.swing.JFrame {
 
         jButton4.setText("修改资料");
         jButton4.setEnabled(false);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -281,36 +312,36 @@ public class userManage extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        int which = this.userTable.getSelectedRow();
+        Object delId = this.userTable.getValueAt(which, 0);
+        //System.out.println(which);
+        delUser(delId);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void userTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTableMouseClicked
         // TODO add your handling code here:
         System.out.println("Mouse Clicked");
+        this.jButton2.setEnabled(false);
+        this.jButton3.setEnabled(false);
+        this.jButton4.setEnabled(false);
         if(this.userTable.getValueAt(this.userTable.getSelectedRow(), 0).toString().length()!=0){
             this.jButton2.setEnabled(true);
             this.jButton3.setEnabled(true);
             this.jButton4.setEnabled(true);
-        }else{
-            this.jButton2.setEnabled(false);
-            this.jButton3.setEnabled(false);
-            this.jButton4.setEnabled(false);
         }
         
     }//GEN-LAST:event_userTableMouseClicked
 
     private void userTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTableMousePressed
         // TODO add your handling code here:
-        System.out.println("Mouse Pressed");
-        if(this.userTable.getValueAt(this.userTable.getSelectedRow(), 0).toString().length()!=0){
-            this.jButton2.setEnabled(true);
-            this.jButton3.setEnabled(true);
-            this.jButton4.setEnabled(true);
-        }else{
-            this.jButton2.setEnabled(false);
-            this.jButton3.setEnabled(false);
-            this.jButton4.setEnabled(false);
-        }
     }//GEN-LAST:event_userTableMousePressed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        String username = this.userTable.getValueAt(this.userTable.getSelectedRow(), 0).toString();
+        changeProfile changeProfileWindow = new changeProfile(username,this);
+        changeProfileWindow.show(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

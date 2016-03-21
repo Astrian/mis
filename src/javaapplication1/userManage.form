@@ -156,6 +156,9 @@
         <Property name="text" type="java.lang.String" value="&#x4fee;&#x6539;&#x8d44;&#x6599;"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
