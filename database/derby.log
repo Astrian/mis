@@ -1,0 +1,23 @@
+Apache Derby Network Server － 10.2.2.0 - (485682) 已启动并且已准备好 2016-02-06 02:00:03.846 GMT 时在端口 1527 上接受连接
+----------------------------------------------------------------
+2016-02-06 02:00:04.304 GMT：
+正在引导数据库目录 C:\Users\Administrator\.netbeans-derby\sample  中的
+Derby VThe Apache Software Foundation - Apache Derby - 10.2.2.0 - (485682) 实例 c013800d-0152-b44e-b7b6-000040ac0767
+
+
+2016-02-06 02:00:04.317 GMT：
+正在关闭实例 c013800d-0152-b44e-b7b6-000040ac0767
+----------------------------------------------------------------
+2016-02-06 02:00:04.326 GMT Thread[DRDAConnThread_3,5,main] (DATABASE = sample), (DRDAID = {1}), 无法启动数据库“sample”，请参阅下一个异常，以了解详细信息。
+2016-02-06 02:00:04.327 GMT Thread[DRDAConnThread_3,5,main] (DATABASE = sample), (DRDAID = {1}), C:\Users\Administrator\.netbeans-derby\sample 上的数据库具有与当前版本的软件不兼容的格式。数据库由版本 10.5 创建或升级。
+----------------------------------------------------------------
+2016-02-06 02:00:15.661 GMT：
+正在引导数据库目录 C:\Users\Administrator\.netbeans-derby\mis  中的
+Derby VThe Apache Software Foundation - Apache Derby - 10.2.2.0 - (485682) 实例 a816c00e-0152-b44e-b7b6-000040ac0767
+
+数据库类装入器已启动 － derby.database.classpath=“”
+2016-02-06 02:00:16.775 GMT Thread[DRDAConnThread_3,5,main] (DATABASE = mis), (DRDAID = {2}), 连接被拒绝：认证无效。
+
+2016-03-21 04:01:35.583 GMT：
+正在关闭实例 a816c00e-0152-b44e-b7b6-000040ac0767
+----------------------------------------------------------------
