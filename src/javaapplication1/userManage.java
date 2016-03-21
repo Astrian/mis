@@ -14,6 +14,33 @@ import javax.swing.JOptionPane;
  */
 public class userManage extends javax.swing.JFrame {
 
+    
+    private void freeze(int freezeId){
+        db con=new db();
+        ResultSet test=con.cha("select * from libuser where id="+freezeId);
+        if(test==null){
+            JOptionPane.showMessageDialog(null, "读取数据库失败", "读取数据库失败", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try{
+            if(!test.next()){
+                JOptionPane.showMessageDialog(null, "系统错误", "错误", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            int status=test.getInt("isforzed");
+            if(status == 0){
+                con.runSql("update libuser set isforzed = "+1+" where id = "+freezeId);
+                listUser();
+            }else{
+                con.runSql("update libuser set isforzed = "+0+" where id = "+freezeId);
+                listUser();
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+    }
     /**
      * Creates new form userManage
      */
@@ -255,8 +282,13 @@ public class userManage extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("冻结");
+        jButton3.setText("冻结/解冻");
         jButton3.setEnabled(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("修改资料");
         jButton4.setEnabled(false);
@@ -342,6 +374,14 @@ public class userManage extends javax.swing.JFrame {
         changeProfile changeProfileWindow = new changeProfile(username,this);
         changeProfileWindow.show(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        int which = this.userTable.getSelectedRow();
+        int freezeId = (int)this.userTable.getValueAt(which, 0);
+        
+        freeze(freezeId);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
