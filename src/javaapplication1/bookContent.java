@@ -308,6 +308,7 @@ public class bookContent extends javax.swing.JFrame {
 
     private void bookTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookTableMouseClicked
         // TODO add your handling code here:
+        this.jButton2.setEnabled(false);
         if(this.bookTable.getValueAt(this.bookTable.getSelectedRow(), 0).toString().length()!=0){
             this.jButton2.setEnabled(true);
         }else{

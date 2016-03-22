@@ -5,18 +5,143 @@
  */
 package javaapplication1;
 
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Administrator
  */
 public class NewJFrame extends javax.swing.JFrame {
     
+    private int checkBorrowed(String isbn){
+        db con = new db();
+        ResultSet test = con.cha("select * from borrow where borrowuser = '"+this.borrowId.getText()+"' and isbn = '"+isbn+"'");
+        if(test==null){
+            JOptionPane.showMessageDialog(null, "读取数据库失败", "读取数据库失败", JOptionPane.ERROR_MESSAGE);
+            return -1;
+        }
+        try{
+            if(!test.next()){
+                return 0;
+            } 
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        return 1; 
+    }
+    
     String loginUser = null;
+    int borrowedBooks;
     //String nextStep = null;
     
     /**
      * Creates new form NewJFrame
      */
+    private void numberChanger(int opt, String book){
+        db con = new db();
+        ResultSet left = con.cha("select * from book where isbn = "+book);
+        
+        try{
+            if(left.next()){
+                int leftNum = left.getInt("bleft");
+                if(opt == 1){
+                    leftNum--;
+                }else if(opt == 0){
+                    leftNum++;
+                }
+                //System.out.println(leftNum);
+                con.runSql("update book set bleft = "+leftNum+" where isbn = "+book);
+            }
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void listBorrowable(Object Isbn){
+        borrowedBooks = 0;
+        int i=0;
+        
+        db con=new db();
+        ResultSet test;
+        if(Isbn == "0"){
+            test=con.cha("select * from book");
+            for(i=0;i<100;i++){
+            this.borrowablelist.getModel().setValueAt(" ", i, 0);
+            this.borrowablelist.getModel().setValueAt(" ", i, 1);
+            this.borrowedlist.getModel().setValueAt(" ", i, 0);
+            this.borrowedlist.getModel().setValueAt(" ", i, 1);
+        }
+        }else{
+            test=con.cha("select * from book where isbn = "+Isbn);
+            for(i=0;i<100;i++){
+            this.borrowablelist.getModel().setValueAt(" ", i, 0);
+            this.borrowablelist.getModel().setValueAt(" ", i, 1);
+        }
+        }
+        if(test==null){
+            JOptionPane.showMessageDialog(null, "读取数据库失败", "读取数据库失败", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try{
+            int j=0;
+            int k=0;
+            this.allReturnBtn.setEnabled(false);
+            while (test.next()) {
+                //ResultSet borrowed = con.cha("select * from borrow where borrowuser = '"+this.borrowId.getText()+"' and isbn = '"+test.getInt("isbn")+"'");
+                if(checkBorrowed(test.getString("isbn"))==1&&Isbn!="0"){
+                    this.borrowedlist.getModel().setValueAt(test.getString("isbn"), j, 0);
+                    this.borrowedlist.getModel().setValueAt(test.getString("bname"), j, 1);
+                    j++;
+                    borrowedBooks ++;
+                }else if(checkBorrowed(test.getString("isbn"))==0 && test.getInt("bleft")>0){
+                    this.borrowablelist.getModel().setValueAt(test.getString("isbn"), k, 0);
+                    this.borrowablelist.getModel().setValueAt(test.getString("bname"), k, 1);
+                    k++;
+                }
+                if(j>0){
+                    this.allReturnBtn.setEnabled(true);
+                }
+            }
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void checkBorrow(){
+        db con=new db();
+        ResultSet test=con.cha("select * from libuser where id="+this.borrowId.getText());
+        if(test==null){
+            JOptionPane.showMessageDialog(null, "读取数据库失败", "读取数据库失败", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try{
+            if(!test.next()){
+                JOptionPane.showMessageDialog(null, "无法找到该用户", "操作已停止", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            else{
+                int freezed;
+                freezed = test.getInt("isforzed");
+                if(freezed == 0){
+                    this.borrowablelist.setEnabled(true);
+                    this.borrowedlist.setEnabled(true);
+                    //this.borrowButton.setEnabled(true);
+                    this.searchByIsbnBtn.setEnabled(true);
+                    //this.allReturnBtn.setEnabled(true);
+                    this.userInfo.setText("<html>"+test.getString("name")+" / 账户正常使用 / 最大可借阅 "+test.getString("allowborrow")+" 本");
+                    listBorrowable("0");
+                }
+                else{
+                    this.userInfo.setText("<html>"+test.getString("name")+" / <span color='red'>账户被冻结</span> / 最大可借阅 "+test.getString("allowborrow")+" 本");
+                }
+            }
+                //JOptionPane.showMessageDialog(null, "登录失败", "登录失败", JOptionPane.ERROR_MESSAGE);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     
     private void operateAuth(int sensitive, String nextStep){
         if( loginUser==null ){
@@ -52,6 +177,9 @@ public class NewJFrame extends javax.swing.JFrame {
             userManage userManageWindow = new userManage();
             userManageWindow.show(true);
         }
+        if (nextStep == "borrow"){
+            checkBorrow();
+        }
     }
     
     public NewJFrame() {
@@ -70,19 +198,19 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jTabbedPane3 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        borrowId = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        userInfo = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        borrowablelist = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        borrowedlist = new javax.swing.JTable();
+        borrowButton = new javax.swing.JButton();
+        returnButton = new javax.swing.JButton();
+        searchByIsbnBtn = new javax.swing.JButton();
+        allReturnBtn = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -103,9 +231,17 @@ public class NewJFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        borrowId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                borrowIdActionPerformed(evt);
+            }
+        });
+        borrowId.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                borrowIdKeyTyped(evt);
+            }
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                borrowIdKeyPressed(evt);
             }
         });
 
@@ -115,10 +251,10 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 13)); // NOI18N
         jLabel7.setText("用户信息");
 
-        jLabel8.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 13)); // NOI18N
-        jLabel8.setText("暂无…");
+        userInfo.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 13)); // NOI18N
+        userInfo.setText("暂无…");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        borrowablelist.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -225,33 +361,32 @@ public class NewJFrame extends javax.swing.JFrame {
                 "ISBN", "书名"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class
-            };
             boolean[] canEdit = new boolean [] {
                 false, false
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(0).setResizable(false);
-            jTable2.getColumnModel().getColumn(0).setPreferredWidth(1);
-            jTable2.getColumnModel().getColumn(1).setResizable(false);
-            jTable2.getColumnModel().getColumn(1).setPreferredWidth(150);
+        borrowablelist.setEnabled(false);
+        borrowablelist.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                borrowablelistMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(borrowablelist);
+        if (borrowablelist.getColumnModel().getColumnCount() > 0) {
+            borrowablelist.getColumnModel().getColumn(0).setResizable(false);
+            borrowablelist.getColumnModel().getColumn(0).setPreferredWidth(1);
+            borrowablelist.getColumnModel().getColumn(1).setResizable(false);
+            borrowablelist.getColumnModel().getColumn(1).setPreferredWidth(70);
         }
 
         jLabel9.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 13)); // NOI18N
         jLabel9.setText("可借书目");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        borrowedlist.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -366,33 +501,48 @@ public class NewJFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(1);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(150);
+        borrowedlist.setEnabled(false);
+        borrowedlist.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                borrowedlistMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(borrowedlist);
+        if (borrowedlist.getColumnModel().getColumnCount() > 0) {
+            borrowedlist.getColumnModel().getColumn(0).setResizable(false);
+            borrowedlist.getColumnModel().getColumn(0).setPreferredWidth(1);
+            borrowedlist.getColumnModel().getColumn(1).setResizable(false);
+            borrowedlist.getColumnModel().getColumn(1).setPreferredWidth(70);
         }
 
-        jButton1.setText("借→");
-
-        jButton5.setText("←还");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        borrowButton.setText("借→");
+        borrowButton.setEnabled(false);
+        borrowButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                borrowButtonActionPerformed(evt);
             }
         });
 
-        jButton6.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 13)); // NOI18N
-        jButton6.setText("通过 ISBN 号搜索");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        returnButton.setText("←还");
+        returnButton.setEnabled(false);
+        returnButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                returnButtonActionPerformed(evt);
             }
         });
 
-        jButton7.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 13)); // NOI18N
-        jButton7.setText("全部归还");
+        searchByIsbnBtn.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 13)); // NOI18N
+        searchByIsbnBtn.setText("通过 ISBN 号搜索");
+        searchByIsbnBtn.setEnabled(false);
+        searchByIsbnBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchByIsbnBtnActionPerformed(evt);
+            }
+        });
+
+        allReturnBtn.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 13)); // NOI18N
+        allReturnBtn.setText("全部归还");
+        allReturnBtn.setEnabled(false);
 
         jLabel10.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 13)); // NOI18N
         jLabel10.setText("已借书目");
@@ -407,27 +557,27 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(borrowId, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(userInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jButton6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                                    .addComponent(searchByIsbnBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton1)
-                                    .addComponent(jButton5)))
+                                    .addComponent(borrowButton)
+                                    .addComponent(returnButton)))
                             .addComponent(jLabel9))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                                .addComponent(allReturnBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))))
                 .addGap(24, 24, 24))
         );
@@ -440,8 +590,8 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
+                    .addComponent(borrowId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(userInfo))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
@@ -454,13 +604,13 @@ public class NewJFrame extends javax.swing.JFrame {
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(211, 211, 211)
-                        .addComponent(jButton1)
+                        .addComponent(borrowButton)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton5)))
+                        .addComponent(returnButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton6)
-                    .addComponent(jButton7))
+                    .addComponent(searchByIsbnBtn)
+                    .addComponent(allReturnBtn))
                 .addGap(24, 24, 24))
         );
 
@@ -659,22 +809,81 @@ public class NewJFrame extends javax.swing.JFrame {
         operateAuth(0, "bookManage");
     }//GEN-LAST:event_bookManageActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void borrowIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrowIdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_borrowIdActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+        String borrowBook = this.borrowedlist.getValueAt(this.borrowedlist.getSelectedRow(), 0).toString();
+        db con = new db();
+        con.runSql("delete from borrow where borrowuser = '"+this.borrowId.getText()+"' and isbn = '"+borrowBook+"'");
+        numberChanger(0,borrowBook);
+        checkBorrow();
+    }//GEN-LAST:event_returnButtonActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void searchByIsbnBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchByIsbnBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+        searchByIsbn searchByIsbnWindow = new searchByIsbn(this);
+        searchByIsbnWindow.show(true);
+    }//GEN-LAST:event_searchByIsbnBtnActionPerformed
 
     private void userManageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userManageActionPerformed
         // TODO add your handling code here:
         operateAuth(0, "userManage");
     }//GEN-LAST:event_userManageActionPerformed
+
+    private void borrowIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_borrowIdKeyTyped
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_borrowIdKeyTyped
+
+    private void borrowIdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_borrowIdKeyPressed
+        // TODO add your handling code here:
+        this.userInfo.setText("暂无…");
+        this.borrowablelist.setEnabled(false);
+        this.borrowedlist.setEnabled(false);
+        this.borrowButton.setEnabled(false);
+        this.searchByIsbnBtn.setEnabled(false);
+        this.allReturnBtn.setEnabled(false);
+        if(evt.getKeyChar()==10){
+            operateAuth(0, "borrow");
+        }
+    }//GEN-LAST:event_borrowIdKeyPressed
+
+    private void borrowablelistMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrowablelistMouseClicked
+        // TODO add your handling code here:
+        this.borrowButton.setEnabled(false);
+        if(this.borrowablelist.getValueAt(this.borrowablelist.getSelectedRow(), 0).toString() != " "){
+            this.borrowButton.setEnabled(true);
+        }
+    }//GEN-LAST:event_borrowablelistMouseClicked
+
+    private void borrowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrowButtonActionPerformed
+        // TODO add your handling code here:
+        String borrowBook = this.borrowablelist.getValueAt(this.borrowablelist.getSelectedRow(), 0).toString();
+        
+        db con = new db();
+        ResultSet test = con.cha("select * from libuser where id = "+this.borrowId.getText());
+        try{
+            test.next();
+            if(borrowedBooks < test.getInt("allowborrow")){
+                con.runSql("insert into borrow (borrowuser, isbn) values ('"+this.borrowId.getText()+"','"+borrowBook+"')");
+                numberChanger(1,borrowBook);
+                checkBorrow();
+            }
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_borrowButtonActionPerformed
+
+    private void borrowedlistMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrowedlistMouseClicked
+        // TODO add your handling code here:
+        this.returnButton.setEnabled(false);
+        if(this.borrowedlist.getValueAt(this.borrowedlist.getSelectedRow(), 0).toString() != " "){
+            this.returnButton.setEnabled(true);
+        }
+    }//GEN-LAST:event_borrowedlistMouseClicked
 
     /**
      * @param args the command line arguments
@@ -713,14 +922,15 @@ public class NewJFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton Loginout;
+    private javax.swing.JButton allReturnBtn;
     private javax.swing.JButton bookManage;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton borrowButton;
+    private javax.swing.JTextField borrowId;
+    private javax.swing.JTable borrowablelist;
+    private javax.swing.JTable borrowedlist;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -731,7 +941,6 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -739,10 +948,10 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
     public javax.swing.JLabel login_info;
+    private javax.swing.JButton returnButton;
+    private javax.swing.JButton searchByIsbnBtn;
+    private javax.swing.JLabel userInfo;
     private javax.swing.JButton userManage;
     // End of variables declaration//GEN-END:variables
 }
