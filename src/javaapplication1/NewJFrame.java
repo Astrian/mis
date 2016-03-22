@@ -58,7 +58,9 @@ public class NewJFrame extends javax.swing.JFrame {
         }
     }
     public void listBorrowable(Object Isbn){
-        borrowedBooks = 0;
+        if(Isbn != "0"){
+            borrowedBooks = 0;
+        }
         int i=0;
         
         db con=new db();
@@ -66,17 +68,17 @@ public class NewJFrame extends javax.swing.JFrame {
         if(Isbn == "0"){
             test=con.cha("select * from book");
             for(i=0;i<100;i++){
-            this.borrowablelist.getModel().setValueAt(" ", i, 0);
-            this.borrowablelist.getModel().setValueAt(" ", i, 1);
-            this.borrowedlist.getModel().setValueAt(" ", i, 0);
-            this.borrowedlist.getModel().setValueAt(" ", i, 1);
-        }
+                this.borrowablelist.getModel().setValueAt(" ", i, 0);
+                this.borrowablelist.getModel().setValueAt(" ", i, 1);
+                this.borrowedlist.getModel().setValueAt(" ", i, 0);
+                this.borrowedlist.getModel().setValueAt(" ", i, 1);
+            }
         }else{
             test=con.cha("select * from book where isbn = "+Isbn);
             for(i=0;i<100;i++){
-            this.borrowablelist.getModel().setValueAt(" ", i, 0);
-            this.borrowablelist.getModel().setValueAt(" ", i, 1);
-        }
+                this.borrowablelist.getModel().setValueAt(" ", i, 0);
+                this.borrowablelist.getModel().setValueAt(" ", i, 1);
+            }
         }
         if(test==null){
             JOptionPane.showMessageDialog(null, "读取数据库失败", "读取数据库失败", JOptionPane.ERROR_MESSAGE);
@@ -89,7 +91,7 @@ public class NewJFrame extends javax.swing.JFrame {
             this.allReturnBtn.setEnabled(false);
             while (test.next()) {
                 //ResultSet borrowed = con.cha("select * from borrow where borrowuser = '"+this.borrowId.getText()+"' and isbn = '"+test.getInt("isbn")+"'");
-                if(checkBorrowed(test.getString("isbn"))==1&&Isbn!="0"){
+                if(checkBorrowed(test.getString("isbn"))==1 && Isbn=="0"){
                     this.borrowedlist.getModel().setValueAt(test.getString("isbn"), j, 0);
                     this.borrowedlist.getModel().setValueAt(test.getString("bname"), j, 1);
                     j++;
@@ -543,6 +545,11 @@ public class NewJFrame extends javax.swing.JFrame {
         allReturnBtn.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 13)); // NOI18N
         allReturnBtn.setText("全部归还");
         allReturnBtn.setEnabled(false);
+        allReturnBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                allReturnBtnActionPerformed(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Noto Sans CJK SC", 0, 13)); // NOI18N
         jLabel10.setText("已借书目");
@@ -884,6 +891,29 @@ public class NewJFrame extends javax.swing.JFrame {
             this.returnButton.setEnabled(true);
         }
     }//GEN-LAST:event_borrowedlistMouseClicked
+
+    private void allReturnBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allReturnBtnActionPerformed
+        // TODO add your handling code here:
+        db con = new db();
+        ResultSet test = con.cha("select * from borrow where borrowuser = '"+this.borrowId.getText()+"'");
+        ResultSet test1;
+        try{
+            long book;
+            int number;
+            while(test.next()){
+                book = test.getLong("isbn");
+                test1 = con.cha("select * from book where isbn = "+book);
+                test1.next();
+                number = test1.getInt("bleft");
+                number++;
+                con.runSql("update book set bleft = "+number+" where isbn = "+book);
+                con.runSql("delete from borrow where borrowuser = '"+this.borrowId.getText()+"'");
+            }
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        checkBorrow();
+    }//GEN-LAST:event_allReturnBtnActionPerformed
 
     /**
      * @param args the command line arguments
