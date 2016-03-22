@@ -50,7 +50,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 }else if(opt == 0){
                     leftNum++;
                 }
-                //System.out.println(leftNum);
+
                 con.runSql("update book set bleft = "+leftNum+" where isbn = "+book);
             }
         }catch(Exception e) {

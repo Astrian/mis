@@ -31,7 +31,6 @@ public class bookContent extends javax.swing.JFrame {
                 String result = con.runSql("delete from book where isbn = "+which);
                 
                 if(result == "OKAY"){
-                    System.out.println("The result is OK.");
                     listBook();
                 }else{
                     JOptionPane.showMessageDialog(null, "读取数据库失败", "读取数据库失败", JOptionPane.ERROR_MESSAGE);
@@ -54,7 +53,6 @@ public class bookContent extends javax.swing.JFrame {
             i++;
         }while(i==100);
         
-        //System.out.println("`listBook` Runned");
         db con=new db();
         ResultSet test=con.cha("select * from book");
         if(test==null){
@@ -302,7 +300,6 @@ public class bookContent extends javax.swing.JFrame {
         // TODO add your handling code here:
         int which = this.bookTable.getSelectedRow();
         Object delIsbn = this.bookTable.getValueAt(which, 0);
-        //System.out.println(which);
         delBook(delIsbn);
     }//GEN-LAST:event_jButton2ActionPerformed
 

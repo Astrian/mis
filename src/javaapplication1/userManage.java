@@ -61,7 +61,6 @@ public class userManage extends javax.swing.JFrame {
                 String result = con.runSql("delete from libuser where id = "+which);
                 
                 if(result == "OKAY"){
-                    System.out.println("The result is OK.");
                     listUser();
                 }else{
                     JOptionPane.showMessageDialog(null, "读取数据库失败", "读取数据库失败", JOptionPane.ERROR_MESSAGE);
@@ -77,7 +76,6 @@ public class userManage extends javax.swing.JFrame {
     public void listUser() {
         int i=0;
         do{
-            System.out.println("actived...");
             this.userTable.getModel().setValueAt(" ", i, 0);
             this.userTable.getModel().setValueAt(" ", i, 1);
             this.userTable.getModel().setValueAt(" ", i, 2);
@@ -86,7 +84,6 @@ public class userManage extends javax.swing.JFrame {
             i++;
         }while(i==100);
         
-        //System.out.println("`listBook` Runned");
         db con=new db();
         ResultSet test=con.cha("select * from libuser");
         if(test==null){
@@ -346,13 +343,11 @@ public class userManage extends javax.swing.JFrame {
         // TODO add your handling code here:
         int which = this.userTable.getSelectedRow();
         Object delId = this.userTable.getValueAt(which, 0);
-        //System.out.println(which);
         delUser(delId);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void userTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTableMouseClicked
         // TODO add your handling code here:
-        System.out.println("Mouse Clicked");
         this.jButton2.setEnabled(false);
         this.jButton3.setEnabled(false);
         this.jButton4.setEnabled(false);

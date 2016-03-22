@@ -13,7 +13,6 @@ import java.sql.*;
 public class db {
     public Connection conn;
     public db(){
-        //System.out.print("aaa");
         String driver ="org.apache.derby.jdbc.EmbeddedDriver";
         String connectionURL ="jdbc:derby://localhost:1527/mis";
         
